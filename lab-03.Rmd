@@ -40,19 +40,19 @@ Are there missing values?
 
 ```{r}
 # which columns are integer
-
+jan_feb_flights |> select(where(is.integer))|> names()
 
 # which columns are double
-
+jan_feb_flights |> select(where(is.double))|> names()
 
 # which columns are character
-
+jan_feb_flights |> select(where(is.character))|> names()
 
 ```
 
 ```{r}
 # which columns contain NA's
-
+jan_feb_flights |> select(where(~ any(is.na(.x)))) |> names()
 ```
 
 **Summary:**  
@@ -65,7 +65,7 @@ Did the GenAI explanation (if used) help you? Which language model you explored?
 What was clear or unclear? Did it make any errors or skip anything important? Did you fact-check? Did you need to provide follow-up prompts or clarifications, or was the first response sufficient?
 
 _Your answer here_
-
+没什么，挺好用的。
 ---
 
 # 2. Delays & Weather
