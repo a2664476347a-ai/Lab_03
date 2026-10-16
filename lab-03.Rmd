@@ -79,12 +79,12 @@ _Your answer here_
 
 # join the datasets
 jan_feb_flights <- jan_feb_flights %>%
-  ____________(weather, by = c(______________________)) 
+  full_join(weather, by = c("origin", "year", "month", "day", "hour")) 
 ```
 
 ```{r}
 # is there a difference in wind speed when wind_gust is missing vs not missing?
-
+jan_feb_flights |> filter(is.na(wind_speed.x))
 
 
 ```
@@ -98,13 +98,13 @@ _Your answer here_
 
 # create a new variable, gust_present
 jan_feb_flights <- jan_feb_flights %>%
-  mutate(gust_present = _______________)
+  mutate(gust_present = is.na(wind_speed.x))
 ```
 
 
 ```{r}
 # is there a relationship between gust_present and dep_delay?
-
+jan_feb_flights |> select(gust_present, dep_delay)
 
 ```
 
@@ -118,6 +118,7 @@ Was GenAI helpful as a navigator? Did it ask you questions to guide your thinkin
 Is there anything you could learn from this to be a better navigator, next time we will work in pairs?
 
 _Your answer here_
+挺好的。
 
 ---
 
@@ -136,14 +137,14 @@ jfk_flights <- jan_feb_flights %>%
 ## REMEMBER TO SET eval=TRUE
 
 # Compute the sample mean
-mean_dep_delay <- jfk_flights %>% ________(mean_jfk = mean(dep_delay)) %>% pull(mean_jfk)
+mean_dep_delay <- jfk_flights %>% summary(mean_jfk = mean(dep_delay)) %>% pull(mean_jfk)
 
 # Construct bootstrap distribution
 set.seed(99)  # for reproducibility
 boot_dist <- jfk_flights %>%
-  ________(response = _________) %>%
-  ________(reps = 1500, type = "bootstrap") %>%
-  ________(stat = _______)                 
+  specify(response = mean_jfk) %>%
+  generate(reps = 1500, type = "bootstrap") %>%
+  calculate(stat = mean)                 
 
 # Compute 95% confidence interval (percentile method)
 boot_dist %>% ...
